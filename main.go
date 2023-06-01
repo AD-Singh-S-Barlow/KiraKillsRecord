@@ -1,6 +1,5 @@
 package main
 
- 
 
 import (
 
@@ -189,5 +188,3 @@ func postNames(c *gin.Context) {
     c.IndentedJSON(http.StatusCreated, newName)
 
 }
-
- 
