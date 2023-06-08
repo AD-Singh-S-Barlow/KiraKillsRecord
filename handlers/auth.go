@@ -1,4 +1,4 @@
-// handlers/auth.go
+
 package handlers
 
 import (
@@ -27,5 +27,25 @@ func Register(c *gin.Context) {
 }
 
 func Login(c *gin.Context) {
-	// Handle login logic here
+	var loginData struct {
+		Username string `json:"username"`
+		Password string `json:"password"`
+	}
+
+	if err := c.ShouldBindJSON(&loginData); err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+		return
+	}
+
+	for _, account := range models.Accounts {
+		if account.Username == loginData.Username && account.Password == loginData.Password {
+			// Authentication successful
+			c.JSON(http.StatusOK, gin.H{"message": "Login successful"})
+			return
+		}
+	}
+
+	// Authentication failed
+	c.JSON(http.StatusUnauthorized, gin.H{"error": "Invalid username or password"})
 }
+
