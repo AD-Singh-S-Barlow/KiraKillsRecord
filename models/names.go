@@ -1,4 +1,3 @@
-// models/names.go
 package models
 
 type NameList struct {
